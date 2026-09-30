@@ -1,0 +1,5 @@
+# database file is rebuilt from the CSVs by sql/01_load_and_check.sql
+*.duckdb
+*.duckdb.wal
+.DS_Store
+__pycache__/
