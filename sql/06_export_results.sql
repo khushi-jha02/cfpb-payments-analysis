@@ -3,7 +3,7 @@
 -- Goal: save the numbers behind each insight as CSV files in results/
 --       so the charts (and anyone on GitHub) use exactly these numbers.
 -- Run:  duckdb cfpb.duckdb   then   .read sql/06_export_results.sql
--- Needs: 02, 04 and 05 have been run.
+-- Needs: 02_scope_and_spike.sql and 04_top_issues.sql have been run.
 -- COPY (query) TO 'file.csv' (HEADER) writes a query's result to a CSV.
 -- =====================================================================
 
