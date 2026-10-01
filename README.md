@@ -67,6 +67,13 @@ python3 memo/make_memo.py        # pip install reportlab
 | `sql/05_company_compare.sql` | Insight 3: issue mix and relief rates by app |
 | `sql/06_export_results.sql` | Saves the numbers behind each chart to `results/` |
 
+## How I built this
+
+I built this project with Claude (Anthropic's AI) as a pair analyst.
+
+- **My part:** I chose the question and the scope (P2P apps and digital wallets, not bank transfers). I downloaded the data, ran every query myself in DuckDB, and checked the results against the CFPB website. I also made the analysis calls: treating the 2025 spike as an anomaly instead of a trend, comparing 2024 with 2026 on a per-month basis, and ignoring small categories whose growth looked big but wasn't meaningful.
+- **Claude's part:** drafting the SQL and the chart and memo scripts with me, explaining each step, and re-checking every number in this README and the memo against the raw data.
+
 ## Caveats
 
 - CFPB complaints are escalations by a self-selected group, not a sample of all users. The analysis therefore leans on shares and comparisons more than raw volume.
