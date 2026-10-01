@@ -4,18 +4,18 @@
 
 **Answer in one line:** More than half of complaints are about money leaving an account without the customer's real consent, unauthorized transactions are the fastest-growing problem, and outcomes differ sharply by app.
 
-📄 **[1-page insight memo (PDF)](memo/cfpb_p2p_insight_memo.pdf)** · Repo: [github.com/khushi-jha02/cfpb-payments-analysis](https://github.com/khushi-jha02/cfpb-payments-analysis)
+**[1-page insight memo (PDF)](memo/cfpb_p2p_insight_memo.pdf)** | Repo: [github.com/khushi-jha02/cfpb-payments-analysis](https://github.com/khushi-jha02/cfpb-payments-analysis)
 
 ---
 
 ## Key findings
 
-All numbers come from the SQL in [`sql/`](sql). The main comparison is **2024 (10,461 complaints)** vs **Jan–Sep 2026 (20,894 complaints)**, measured per month so that 12 and 9 months compare fairly.
+All numbers come from the SQL in [`sql/`](sql). The main comparison is **2024 (10,461 complaints)** vs **Jan to Sep 2026 (20,894 complaints)**, measured per month so that 12 and 9 months compare fairly.
 
 | # | Insight | Recommendation |
 |---|---|---|
-| 1 | **54.7%** of Jan–Sep 2026 complaints (11,428 of 20,894) were fraud/scams or unauthorized transactions (53.6% in 2024). | Risk-based "pause & confirm" before risky payments: first-time recipients, unusual amounts, new devices |
-| 2 | **Unauthorized transactions grew 4.1×** (138 → 571 complaints/month), vs 2.7× for all complaints (872 → 2,322/month). | One-tap "I didn't make this": lock + dispute in one flow, real-time alerts, step-up verification |
+| 1 | **54.7%** of Jan to Sep 2026 complaints (11,428 of 20,894) were fraud/scams or unauthorized transactions (53.6% in 2024). | Risk-based "pause & confirm" before risky payments: first-time recipients, unusual amounts, new devices |
+| 2 | **Unauthorized transactions grew 4.1x** (from 138 to 571 complaints/month), vs 2.7x for all complaints (from 872 to 2,322/month). | One-tap "I didn't make this": lock + dispute in one flow, real-time alerts, step-up verification |
 | 3 | **Similar volume, very different outcomes.** Cash App (6,490) and PayPal + Venmo (6,341) had similar volume, but PayPal + Venmo reported money back in **19.2%** of closed complaints; Cash App in **1 of 6,383**. | In-app dispute tracker with status, timeline, decision reason and appeal path |
 
 ![Monthly complaints](charts/chart1_monthly_volume.png)
@@ -24,7 +24,7 @@ All numbers come from the SQL in [`sql/`](sql). The main comparison is **2024 (1
 
 ## Why 2025 is excluded from the comparison
 
-January 2025 alone had **48,238** complaints (vs about 900 in a normal month). **87.2%** were filed under one vague issue ("Other transaction problem"), and **95.9%** were against Cash App (Block) or Zelle's operator (Early Warning Services). The wave coincides with two CFPB enforcement actions: the [Dec 20, 2024 lawsuit over Zelle](https://www.fortune.com/2024/12/20/cfpb-sues-jpmorgan-bank-of-america-alleged-zelle-fraud) and the [Jan 16, 2025 order against Block](https://www.consumerfinance.gov/about-us/newsroom/cfpb-orders-operator-of-cash-app-to-pay-175-million-and-fix-its-failures-on-fraud). The share of "Other transaction problem" took until about Aug 2025 to return to its normal 11–15%, and a second wave appeared in Oct 2025 (48.3%). See [`sql/03_spike_fingerprint.sql`](sql/03_spike_fingerprint.sql).
+January 2025 alone had **48,238** complaints (vs about 900 in a normal month). **87.2%** were filed under one vague issue ("Other transaction problem"), and **95.9%** were against Cash App (Block) or Zelle's operator (Early Warning Services). The wave coincides with two CFPB enforcement actions: the [Dec 20, 2024 lawsuit over Zelle](https://www.fortune.com/2024/12/20/cfpb-sues-jpmorgan-bank-of-america-alleged-zelle-fraud) and the [Jan 16, 2025 order against Block](https://www.consumerfinance.gov/about-us/newsroom/cfpb-orders-operator-of-cash-app-to-pay-175-million-and-fix-its-failures-on-fraud). The share of "Other transaction problem" took until about Aug 2025 to return to its normal 11% to 15%, and a second wave appeared in Oct 2025 (48.3%). See [`sql/03_spike_fingerprint.sql`](sql/03_spike_fingerprint.sql).
 
 ## Data
 
