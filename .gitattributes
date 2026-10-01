@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Show SQL as the main language on GitHub (the Python files only build charts and the memo)
+*.sql linguist-detectable=true
+*.py linguist-detectable=false
