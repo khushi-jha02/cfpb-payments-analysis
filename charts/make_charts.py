@@ -22,8 +22,8 @@ from PIL import Image
 BLUE, ORANGE, GRAY = "#2a78d6", "#eb6834", "#b9b7ae"
 INK, INK2, MUTED = "#0b0b0b", "#52514e", "#898781"
 GRID, AXIS, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
-SOURCE = ("Source: CFPB Consumer Complaint Database (downloaded 2026-09-30). "
-          "Scope: 'Domestic (US) money transfer' + 'Mobile or digital wallet' sub-products.")
+SOURCE = ("Source: CFPB Consumer Complaint Database, downloaded Sep 30, 2026. "
+          "Scope: domestic money transfer and mobile or digital wallet complaints.")
 
 plt.rcParams.update({
     "font.family": "DejaVu Sans", "font.size": 10, "text.color": INK,
@@ -107,7 +107,7 @@ def chart_monthly_volume():
     x = range(len(months))
 
     for start, end, label in [("2024-01", "2024-12", f"2024 baseline\n{per_month_2024:,.0f} / month"),
-                              ("2026-01", "2026-09", f"Jan–Sep 2026\n{per_month_2026:,.0f} / month")]:
+                              ("2026-01", "2026-09", f"Jan to Sep 2026\n{per_month_2026:,.0f} / month")]:
         i0, i1 = months.index(start), months.index(end)
         ax.axvspan(i0 - 0.5, i1 + 0.5, color=BLUE, alpha=0.07, linewidth=0)
         ax.text((i0 + i1) / 2, cap * 0.93, label, ha="center", va="top", fontsize=8.5, color=INK2)
@@ -118,7 +118,7 @@ def chart_monthly_volume():
     peak = counts.index(max(counts))
     ax.plot([peak], [cap], marker="^", markersize=8, color=BLUE,
             markeredgecolor=SURFACE, markeredgewidth=2, clip_on=False)
-    ax.annotate(f"{months[peak]}: {counts[peak]:,} (off scale)\nfiling wave after CFPB actions\nvs. Zelle & Cash App",
+    ax.annotate(f"Jan 2025: {counts[peak]:,} (off scale)\nfiling wave after CFPB actions\nagainst Zelle and Cash App",
                 xy=(peak, cap), xytext=(peak - 0.8, cap * 0.78),
                 fontsize=8.5, color=INK2, va="top", ha="right")
     oct25 = months.index("2025-10")
@@ -130,9 +130,9 @@ def chart_monthly_volume():
     ax.set_xticks(ticks, [months[i][:4] for i in ticks])
     ax.set_xlim(-0.5, len(months) - 0.5)
     style_axes(ax)
-    add_titles(fig, "P2P & wallet complaints per month, Jan 2022 – Sep 2026",
-               f"Monthly volume is {per_month_2026 / per_month_2024:.1f}× higher in 2026 than 2024. "
-               "2025 is excluded from comparisons (event-driven filing waves).",
+    add_titles(fig, "P2P & wallet complaints per month, Jan 2022 to Sep 2026",
+               f"Monthly volume is {per_month_2026 / per_month_2024:.1f}x higher in 2026 than 2024. "
+               "2025 is left out of the comparison because of unusual filing waves.",
                note="Sep 2026 is likely incomplete: CFPB publishes some complaints with a delay.")
     save(fig, "charts/chart1_monthly_volume.png")
 
@@ -144,13 +144,13 @@ def draw_issue_bars(ax, compact):
     ax.barh([i + h / 2 + 0.02 for i in y], issue_2024, height=h, color=GRAY,
             label="2024" if compact else "2024 (per month)")
     ax.barh([i - h / 2 - 0.02 for i in y], issue_2026, height=h, color=BLUE,
-            label="Jan–Sep 2026" if compact else "Jan–Sep 2026 (per month)")
+            label="Jan to Sep 2026" if compact else "Jan to Sep 2026 (per month)")
     xmax = max(issue_2026) * (1.2 if compact else 1.18)
     for i in y:
         ax.text(issue_2024[i] + 8, i + h / 2 + 0.02, f"{issue_2024[i]:,.0f}", va="center", fontsize=8, color=MUTED)
         ax.text(issue_2026[i] + 8, i - h / 2 - 0.02, f"{issue_2026[i]:,.0f}", va="center", fontsize=8.5, color=INK)
         growth = issue_2026[i] / issue_2024[i]
-        ax.text(xmax * 1.02, i, f"{growth:.1f}×", va="center", ha="left", fontsize=10,
+        ax.text(xmax * 1.02, i, f"{growth:.1f}x", va="center", ha="left", fontsize=10,
                 fontweight="bold" if growth >= 4 else "normal", color=INK if growth >= 4 else INK2)
     ax.text(xmax * 1.02, len(top5) - 0.45, "growth", fontsize=8, color=MUTED, ha="left")
     ax.set_yticks(list(y), issue_labels, color=INK, fontsize=10 if compact else 9.5)
@@ -164,8 +164,8 @@ def chart_issues():
     draw_issue_bars(ax, compact=False)
     ax.xaxis.set_major_formatter(COMMA)
     ax.legend(loc="lower right", frameon=False, fontsize=8.5, labelcolor=INK2)
-    add_titles(fig, "Top 5 complaint issues: complaints per month, 2024 vs Jan–Sep 2026",
-               f"Fraud + unauthorized transactions = {fraud_unauth_share:.1f}% of 2026 complaints. "
+    add_titles(fig, "Top 5 complaint issues: complaints per month, 2024 vs Jan to Sep 2026",
+               f"Fraud and unauthorized transactions were {fraud_unauth_share:.1f}% of 2026 complaints. "
                "Unauthorized transactions grew fastest.")
     save(fig, "charts/chart2_issues_growth.png")
 
@@ -184,7 +184,7 @@ def draw_outcome_bars(ax, compact):
             if compact:
                 text = f"{total:.1f}% relief\n({money_pct[i]:.1f}% money back)"
             else:
-                text = f"{total:.1f}% any relief  ·  {money_pct[i]:.1f}% money back"
+                text = f"{total:.1f}% any relief, {money_pct[i]:.1f}% money back"
         else:
             sep = "\n" if compact else " closed complaints "
             text = f"{int(r['money_back']):,} of {closed[i]:,}{sep}got money back"
@@ -202,11 +202,10 @@ def chart_outcomes():
     ax.set_xlim(0, 100)
     ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:.0f}%"))
     ax.legend(loc="lower right", frameon=False, fontsize=8.5, labelcolor=INK2)
-    add_titles(fig, "How complaints ended, Jan–Sep 2026 (closed complaints, company-reported)",
+    add_titles(fig, "How complaints ended, Jan to Sep 2026 (closed complaints, company-reported)",
                f"Similar volume, different outcomes: PayPal + Venmo gave money back in {paypal['pct_money_back']}% "
-               f"of cases; Cash App in {int(cashapp['money_back']):,} of {int(cashapp['closed_complaints']):,}.",
-               note="Note: Zelle refunds are usually issued by the customer's bank (in 'Banks & others'), "
-                    "not by Early Warning Services.")
+               f"of cases. Cash App did in {int(cashapp['money_back']):,} of {int(cashapp['closed_complaints']):,}.",
+               note="Note: Zelle refunds usually come from the customer's bank, which is counted in Banks & others.")
     save(fig, "charts/chart3_outcomes_by_app.png")
 
 
